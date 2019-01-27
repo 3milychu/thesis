@@ -3,7 +3,7 @@ West-Pavlov, Russell
 PN441 .W4565 2013
 
 Temporality - dividing time
-Questions:
+Questions:<br>
 -- perceptions of time
 -- comparing times
 -- experience of time
