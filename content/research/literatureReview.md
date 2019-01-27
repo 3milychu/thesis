@@ -3,6 +3,12 @@ West-Pavlov, Russell
 PN441 .W4565 2013
 
 Temporality - dividing time
+Questions:
+-- perceptions of time
+-- comparing times
+-- experience of time
+-- events in time
+-- refiguring time?
 
 ### Philosophies of time 
 • Zeno: infinite divisibility of movement into units of time
@@ -11,8 +17,6 @@ Temporality - dividing time
 • Newtonian Time: empty container filling with events
 • Einstein spacetime: space and time are bound within each other; relative based on 'place, speed, mode of comparison'
 -- Every reference body has its own particular time
-
-
 
 ## Refiguring minds in narrative media
 David Ciccoricco 1973- 2015
