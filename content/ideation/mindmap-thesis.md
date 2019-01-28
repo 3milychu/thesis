@@ -1,3 +1,5 @@
+https://www.mindmeister.com/1208188356
+
 I am visualizing representations of temporality because I want to understand what patterns can be revealed and how memory is affected when you redesign time for the digital medium (interactivity, materializing)
 
 **Time and Memory**
