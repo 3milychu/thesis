@@ -1,10 +1,3 @@
-p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Helvetica}
-p.p2 {margin: 0.0px 0.0px 0.0px 10.0px; font: 12.0px Arial}
-p.p3 {margin: 0.0px 0.0px 0.0px 20.0px; font: 10.0px Arial}
-p.p4 {margin: 0.0px 0.0px 0.0px 30.0px; font: 10.0px Arial}
-p.p5 {margin: 0.0px 0.0px 0.0px 40.0px; font: 10.0px Arial}
-p.p6 {margin: 0.0px 0.0px 0.0px 50.0px; font: 10.0px Arial}
-
 I am visualizing representations of temporality because I want to understand what patterns can be revealed and how memory is affected when you redesign time for the digital medium (interactivity, materializing)
 
 **Time and Memory**
