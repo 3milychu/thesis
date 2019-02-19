@@ -1,0 +1,131 @@
+https://www.mindmeister.com/1208188356
+
+I am visualizing representations of temporality because I want to understand what patterns can be revealed and how memory is affected when you redesign time for the digital medium (interactivity, materializing)
+Time and Memory
+History of events
+Living or dead history
+Narrative time
+master narratives
+meta-narratives
+Remembering time
+patterns
+re-mining time
+the particular
+landmarks
+collections of memories
+Identities over time
+Creation of identities
+Fragmenting identities
+Destruction of identities
+Maintenance of identity
+Representing the quantified self over time
+Data self over time
+times when behaviors occur
+amplification of behaviors
+policing
+curation
+collections
+Perception of Time
+Experience of Time
+Representation of duration
+real-time
+recorded time
+spatialization of time
+Digital explorations i.e. "if an hour was a pixel..."
+Interaction with time
+dialogue with time
+annotated time
+Making time physical; "playing with time"
+materializing time as data
+"digging" in time
+past, present, future moments of time colliding
+artifacts of time
+qualities of artifacts of time
+aging
+texture
+process
+transformations
+fusion
+actions
+birth
+form
+death
+opacity
+games/simulations
+replaying/rewinding
+pausing time
+reversing time (effects)
+direction of time
+linear
+top/bottom
+forward/backward
+left/right
+simultaneous
+stream
+past/present/future collide and influence
+Passing of time
+losing/devouring time
+fading of time; irretrievability
+temporary nature of time
+"vanishing" fringe
+Division of time
+Units of time
+creation of alternative units of time?
+Use of time
+Labor and productivity
+reactions against time
+reimagining the sense of time
+Synchronization
+collaboration
+Value of time
+Repetition over time
+connection or break with the future
+Cyclical time
+Relations to time
+relation between humans and their natural environment
+Personal units of time?
+Audience
+Design researchers
+Journalists
+Data artists
+Data scientists
+General practitioners with data
+Data
+Cultural data
+Image data
+Ecological data
+Narrative data
+Time-series data
+Self-tracking data
+Real-time news
+Questions
+How can alternative views of temporality for datasets with images and rich metadata impact the discovery of relationships among objects and events across time?
+How can alternate views of temporality impact understanding of rhythm inherent to natural ecologies to reduce environmental carelessness?
+How does varying the temporal design of data narratives impact individual memory, collective memory, shared memory?
+What other units of time might be imagined to better understand progression of events or behaviors over time?
+Organization of Time
+Representations of time
+clocks
+calendars
+timelines
+time-series
+photographic narrative
+video narrative
+literature narrative
+Relative time
+Dependent on the reference body/subject's frame of reference
+time experiences of different observers varies
+Dependent on time, space, circumstance
+Time inseparable from lived experience
+Process of being
+space-time continuum
+events happen simultaneously
+"pure" time
+Newtonian Time
+Sequential time
+Absolute time
+Calendar time
+Chronometrical time
+Universal time
+Time abstracted from events and nature
+"measurable" time
