@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito:400,700" rel="stylesheet">
+</head>
+<style>
+@keyframes fadeIn{
+	0% {opacity:0;}
+	100% {opacity:1;}
+}
+.main {
+	width:100%;
+	margin:auto;
+	height:65vh;
+	overflow:hidden;
+	text-align:center;
+}
+body, html {
+	position:relative;
+	font-family:'Nunito', sans-serif;
+	color:#666666;
+}
+iframe {
+	margin-top:-5%;
+	animation:fadeIn 0.5s ease-in-out;
+}
+.caption {
+	text-align:center;
+	animation:fadeIn 0.5s ease-in-out;
+	width:50%;
+	margin:auto;
+}
+.caption h2 {
+	font-size:0.7em;
+	font-weight:400;
+	animation:fadeIn 0.5s ease-in-out;
+}
+.page-controls{
+	margin-top:5%;
+	text-align:center;
+}
+.page-controls div{
+	width:1em;
+	height:1em;
+	background-color:#CCCCCC;
+	display:inline-block;
+	border-radius:50%;
+	margin:1%;
+	cursor:pointer;
+}
+@media screen and (max-width:768px){
+	iframe {
+		margin-top:-10%;
+	}
+}
+</style>
+<body>
+
+<div class="main">
+</div>
+
+<div class="caption">
+</div>
+
+<div class="page-controls">
+	<div></div>
+	<div></div>
+	<div></div>
+</div>
+
+</body>
+
+<script>
+
+main = document.querySelector('.main');
+caption = document.querySelector('.caption')
+controls = document.querySelectorAll('.page-controls div');
+
+firstpage();
+controls[0].onclick=function(){
+	firstpage();
+}
+controls[1].onclick=function() {
+	secondpage()
+}
+controls[2].onclick=function() {
+	thirdpage();
+}
+function firstpage() {
+	main.innerHTML="";
+	iframe=document.createElement('iframe');
+	iframe.src="1.html";
+	iframe.width="375";
+	iframe.height="700"
+	iframe.frameBorder=0;
+	main.appendChild(iframe);
+	caption.innerHTML="";
+	caption.innerHTML="<h2><h2>";
+	controls[0].style.backgroundColor="black";
+	controls[1].style.backgroundColor="#CCCCCC";
+	controls[2].style.backgroundColor="#CCCCCC";
+}
+
+function secondpage() {
+	main.innerHTML="";
+	iframe=document.createElement('iframe');
+	iframe.src="demo.html";
+	iframe.width="375";
+	iframe.height="700"
+	iframe.frameBorder=0;
+	main.appendChild(iframe);
+	caption.innerHTML="";
+	caption.innerHTML="<h2>Kairos takes the data from a shared event<h2>";
+	controls[0].style.backgroundColor="#CCCCCC";
+	controls[1].style.backgroundColor="black";
+	controls[2].style.backgroundColor="#CCCCCC";
+}
+
+function thirdpage() {
+	main.innerHTML="";
+	iframe=document.createElement('iframe');
+	iframe.src="2/demo.html";
+	iframe.width="375";
+	iframe.height="700"
+	iframe.frameBorder=0;
+	main.appendChild(iframe);
+	caption.innerHTML="";
+	caption.innerHTML="<h2>and visualizes how sentiments in real-time shaped witnessed experience<h2>";
+	controls[0].style.backgroundColor="#CCCCCC";
+	controls[1].style.backgroundColor="#CCCCCC";
+	controls[2].style.backgroundColor="black";
+}
+
+
+</script>
+
+</html>
