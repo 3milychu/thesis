@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </head>
+<script>
+var proxy="https://cors-anywhere.herokuapp.com/";
+var api_base = 'https://samples.openweathermap.org/data/2.5/weather?id=2172797&appid='
+var api_key = '20992978b19862f62faeb1e4923f38a6';
+fetch(proxy+api_base+api_key, {
+  method:'GET',
+  contentType: 'application/json',
+  mode: "no-cors", // no-cors, cors, *same-origin
+})
+  .then(function(response) {
+    return response;
+  })
+  .then(function(myJson) {
+    console.log(JSON.stringify(myJson));
+  });
+    
+</script>
+    
+</html>
