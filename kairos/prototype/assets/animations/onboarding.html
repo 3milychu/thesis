@@ -6,19 +6,19 @@
 
 </head>
 <style>
-canvas {
+#canvas {
 	width:100%;
 	height:100vh;
 }
 </style>
 <body>
 
-<canvas>
-</canvas>
+<div id='canvas'>
+</div>
 
 </body>
 <script>
-element=document.querySelector('canvas')
+element=document.querySelector('#canvas')
 lottie.loadAnimation({
   container: element, // the dom element that will contain the animation
   renderer: 'svg',
