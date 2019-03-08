@@ -37,7 +37,7 @@ role of the first rater
 *rater2*
 role of the second rater
 
-## general.csv
+## 'general.csv'
 
 *genchar1*
 comment under review provided by individual referenced in (role). it is an overall reaction to the musical performance by this individual. text field.
@@ -60,7 +60,7 @@ the comment provided by the second rater who reviewed this comment to explain th
 *rating2.genchar1.type*
 label describing the nature of the comment provided by the second rater. Possible values: No comment, elaboration, affirmation, with qualifications, disagrees with basis for claim.
 
-## moment.csv
+## 'moment_all.csv' and 'moment_all.json'
 
 *mom1.char*
 comment under review provided by individual referenced in (role). it is a reaction to a specific moment in the musical performance. text field.
@@ -82,8 +82,6 @@ the comment provided by the second rater who reviewed this comment to explain th
 
 *rating2.mom1.type*
 label describing the nature of the comment provided by the second rater. Possible values: No comment, elaboration, affirmation, with qualifications, disagrees with basis for claim.
-
-## moment-details.csv
 
 *MOM.STARTBAR*
 Start bar or measure of piece to which the moment referenced in comment_id is tied to. integer value.
