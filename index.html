@@ -13,6 +13,10 @@
 </head>
 <body>
 
+<!-- onboarding -->
+<div class="onboarding">
+</div>
+
 <!-- background fill -->
 <div class="fill">
 </div>
@@ -68,6 +72,13 @@
 			</div>
 		</div>
 
+		<div class="option" id="about">
+			<div class="label"></div>
+			<div class="circle-button">
+				?
+			</div>
+		</div>
+
 		<div class="floater">
 			<a href="https://en.wikipedia.org/wiki/Fantasy_Pieces_for_Clarinet_and_Piano_(Schumann)" target="_blank">
 				<div id="app-name">
@@ -86,6 +97,9 @@
 
 	<!-- comments -->
 	<div id="reactions">
+		<div id="just_listening">
+			<iframe src="assets/onboarding/data/4/demo.html" frameborder=0></iframe>
+		</div>
 		<div id="start-message">
 			<h1>Notes on Perspective</h1>
 			<p>Recital critique for Fantasiestücke, Op.73 (Schumann, Robert) by an ensemble class at the Mannes School of Music. This data visualization invites you to interact with the reactions that occured among the musicians by reconstructing the event from collected data in experienced time.</p>
@@ -217,8 +231,6 @@ var people_status = [{performer: "both", audience: "all", backup: "both"}];
 var performer = people_status[0]['performer'];
 var audience = people_status[0]['audience'];
 var backup = people_status[0]['backup'];
-
-
 //mobile view
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     page=document.querySelectorAll('.page');
@@ -226,7 +238,6 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     	page[i].style.height="120vh";
     }
 };
-
 // run functions
 window.onload=function() {
 	spatial();
@@ -238,7 +249,6 @@ d3.csv('data/cluster_results.csv')
 	})
 	.catch(function(error){
 	})
-
 function loadReactions() {
 	d3.json('https://raw.githubusercontent.com/3milychu/music-vis/master/data/moment_all2.json')
 	.then(function(data){
@@ -247,7 +257,6 @@ function loadReactions() {
 		endorsementsDetail(data);
 	})
 	.catch(function(error){
-
 	})
 }
 resizeInterface();
@@ -265,7 +274,6 @@ menuListen();
 drawCircles(14);
 getPeopleStyles();
 getAllSignatures();
-
 // svg watcher
 svg_x = {
   aInternal: 0,
@@ -281,12 +289,10 @@ svg_x = {
     this.aListener = listener;
   }
 }
-
 // get all signatures
 function getAllSignatures() {
 	console.log("get signatures")
 	window.addEventListener('DOMContentLoaded', (event) => {
-
 		el=document.querySelector('svg')
 		checkSvg = setInterval(function() {
 				if(el.clientHeight!=0){
@@ -310,8 +316,6 @@ function getAllSignatures() {
 		})
 	});
 }
-
-
 // play on audio click
 audio = document.querySelector('audio');
 audio.onclick=function() {
@@ -319,7 +323,6 @@ audio.onclick=function() {
 	audiocontainer=document.querySelector('.audio-container');
 	audiocontainer.style.backgroundColor="white";
 }
-
 audio.onpause=function(){
 	stopSpin();
 }
@@ -338,16 +341,21 @@ function clear() {
 	removeStartMessage();
 	clearSignature();
 }
-
 // remove start message
 function removeStartMessage() {
 	if(time!=0.00){
 		target=document.querySelector('#reactions');
-		target.innerHTML="";
+		start_message = document.querySelector('#start-message')
+		if(start_message!=null){
+			start_message.remove();
+		}
+		items = target.querySelectorAll('.item')
+		for (k=0;k<items.length;k++){
+			items[k].remove();
+		}
 		target.style.paddingBottom="70vh";
 	}
 }
-
 // clear signature
 function clearSignature() {
 	d3.selectAll('path').remove();
@@ -356,7 +364,6 @@ function clearSignature() {
 		.attr("class", "")
 		.attr("r", 10);
 }
-
 // load music
 function getMusic(data) {
 	audio.onplay=function() {
@@ -377,9 +384,17 @@ function getMusic(data) {
 		}, 0);
 	}
 }
-
+// go to cluster analysis when click on cluster labels
+function goToAnalysis() {
+	targets = document.querySelectorAll('.clusterlabel')
+	for(i=0;i<targets.length;i++){
+		targets[i].onclick=function() {
+			var analysis = window.open('cluster-analysis.html', '_blank');
+			analysis.focus();
+		}
+	}
+}
 // design record based on cluster by score image of that beat
-
 function designByCluster(data){
 	target = document.querySelector('#record');
 	svg = document.querySelector('svg');
@@ -391,19 +406,17 @@ function designByCluster(data){
 	// turn svg color through css class
 	// clear previous svg
 	// if cluster 2, turn disc dark
-	if(label==2){
-		svg.style.backgroundColor="#F15A24"
-	} else {
-		svg.style.backgroundColor="transparent"
-	}
+	// if(label==2){
+	// 	svg.style.backgroundColor="#1d1d1d"
+	// } else {
+	// 	svg.style.backgroundColor="transparent"
+	// }
 }
-
 function removeClusterDesign(){
 	target = document.querySelector('#record');
 	target.className = "";
 	target.classList.add("cluster-none");
 }
-
 // cameras: roll music and show
 function roll(data) {
 	reset();
@@ -413,7 +426,6 @@ function roll(data) {
 	getRef(data);
 	spin();
 }
-
 // spin and stop record player in signature view
 function spin(){
 	record = document.querySelector('svg');
@@ -421,7 +433,6 @@ function spin(){
 	document.getElementById("record").style.animation = "5s zoom infinite ease-in-out";
 	document.querySelector('#reactions2').style.backgroundColor="#1d1d1d";
 }
-
 function stopSpin(){
 	record = document.querySelector('svg');
 	if(record!=null){
@@ -430,8 +441,6 @@ function stopSpin(){
 	document.getElementById("record").style.animation = "";
 	document.querySelector('#reactions2').style.backgroundColor="transparent";
 }
-
-
 // get where we are in music/data at all times there is some data
 function getRef(data){
 	measure = data['measure'];
@@ -444,7 +453,6 @@ function getRef(data){
 		watch ="same"
 	}
 }
-
 // people filters menu
 function menuListen(){
 	menu = document.querySelector('#perspective-filter');
@@ -465,7 +473,6 @@ function menuListen(){
 		people_options.style.display="none";
 	}));
 }
-
 // time navigation options listen
 function optionsListen(name) {
 	options=document.querySelectorAll("div[name="+name+"]");
@@ -496,12 +503,10 @@ function optionsListen(name) {
 		}
 	}
 }
-
 // capitalize first letter
 function caps(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
 // get selections
 function status() {
 	perspective = document.querySelector('.perspective');
@@ -527,7 +532,6 @@ function status() {
 		}
 	}
 }
-
 function getPeopleStatus() {
 	people_filters = document.querySelector('.people-filters');
 	people_options = people_filters.querySelectorAll('option')
@@ -549,15 +553,12 @@ function getPeopleStatus() {
 					this.style.backgroundColor="rgb(216, 166, 147)";
 					this.style.color="white";
 				}
-
 			}
 			getPeopleStyles();
 			console.log(people_status)
 		}
 	}
 }
-
-
 function getPeopleStyles() {
 	all_selection = document.querySelector('#all')
 	performer = people_status[0]['performer'];
@@ -574,7 +575,6 @@ function getPeopleStyles() {
 		all.style.color = "black";
 	}
 }
-
 // get dataset view: 0= comments; 2=spatial, 3=signature
 function getView(view){
 	view_container = document.querySelector('.view');
@@ -611,11 +611,7 @@ function getView(view){
 			}
 		}
 	}
-
 }
-
-
-
 // get reactions
 function getReactions(data){
 	// display reactions
@@ -629,6 +625,19 @@ function getReactions(data){
 	addComments(add);
 	// adjust playback rate
 	setExperienceOptions(add);
+	// change svg
+	justListening(add.length)
+}
+
+function justListening(length){
+	console.log(length);
+	animation = document.getElementById('just_listening')
+	if(length==0){
+		console.log('hide animation')
+		animation.style.opacity=1;
+	} else if (length>0){
+		animation.style.opacity=0;
+	}
 }
 
 function updateData(data){
@@ -675,7 +684,6 @@ function updateData(data){
 	}
 	return data;
 }
-
 // add reactions to comments view, spatial view and signature view
 function addComments(add) {
 	if(add.length!=0){
@@ -697,21 +705,21 @@ function addComments(add) {
 		}
 	}
 }
-
 // draw signatures
 function getSignature(data, role){
 	sentiment = data['sentiment'];
+	comment = data['MOM1CHAR']
 	var point1 = getGraphableId(role);
 	var point2 = getGraphableId(data['rater1'])
 	var point3 = getGraphableId(data['rater2'])
 	
 	if(data['rater1_reassigned']>=3){
 		if(sentiment == "pos"){
-			drawPath(point1, point2, "sig_pos");
+			drawPath(point1, point2, "sig_pos", comment);
 		} else if( sentiment == "neg") {
-			drawPath(point1, point2, "sig_neg");
+			drawPath(point1, point2, "sig_neg", comment);
 		} else {
-			drawPath(point1, point2, "sig_mixed")
+			drawPath(point1, point2, "sig_mixed", comment)
 		}
 	} else {
 		if(sentiment == "pos"){
@@ -722,11 +730,11 @@ function getSignature(data, role){
 	}
 	if(data['rater2_reassigned']>=3){
 		if(sentiment == "pos"){
-			drawPath(point1, point3, "sig_pos");
+			drawPath(point1, point3, "sig_pos", comment);
 		} else if(sentiment == "neg") {
-			drawPath(point1, point3, "sig_neg");
+			drawPath(point1, point3, "sig_neg", comment);
 		} else {
-			drawPath(point1, point3, "sig_mixed")
+			drawPath(point1, point3, "sig_mixed", comment)
 		}
 	} else {
 		if(sentiment == "pos"){
@@ -752,17 +760,13 @@ function getSignature(data, role){
 			highlight(point3, "usig_mixed");
 		}
 	}
-
 }
-
-
 function getGraphableId(name){
 	// sig_ref = parseInt(name.slice(-1));
 	sig_ref = parseInt(name.slice(-2));
 	test = Number.isInteger(sig_ref);
 	if(test==true){
 			return "person"+sig_ref;
-
 	} else if (test==false){
 		if(name=="Performing pianist"){
 			return "person11";
@@ -778,7 +782,6 @@ function getGraphableId(name){
 		}
 	}
 }
-
 function setExperienceOptions(add){
 	if(time_option == "experienced"){
 		adjustPlayback(add);
@@ -793,7 +796,6 @@ function setExperienceOptions(add){
 		alignScoreView(add.length)
 	}
 }
-
 function createComment(data, id, role){
 	reactions = document.querySelector('#reactions');
 	comment = data['MOM1CHAR'];
@@ -809,17 +811,13 @@ function createComment(data, id, role){
 	div.appendChild(p);
 	reactions.prepend(div);
 }
-
-
 function getpos(event) {
 	var e = window.event;
 	x = e.clientX + "px";
 	y = e.clientY + "px";
 }
-
 // setup signature view
 function drawCircles(num_circles){
-
        var createNodes = function (numNodes, radius) {
          var nodes = [], 
              width = (radius * 2) + 50,
@@ -837,7 +835,6 @@ function drawCircles(num_circles){
          }
          return nodes;
        }
-
        var createSvg = function (radius, callback) {
          d3.selectAll('svg').remove();
          var svg = d3.select('#canvas')
@@ -845,15 +842,12 @@ function drawCircles(num_circles){
             .attr('width', (radius * 2) + 50)
             .attr('height', (radius * 2) + 50);
         	callback(svg);
-
           var defs = svg.append("defs")
-
 		filter = defs
 				 .append("filter")
 				.attr("id", "blur")
 				.append("feGaussianBlur")
 				.attr("stdDeviation", 5);
-
           gradient = defs
 			  .append("linearGradient")
 			    .attr("id", "gradient")
@@ -862,25 +856,20 @@ function drawCircles(num_circles){
 			    .attr("x2", "100%")
 			    .attr("y2", "100%")
 			    .attr("spreadMethod", "pad");
-
 			gradient.append("stop")
 			    .attr("offset", "0%")
 			    .attr("stop-color", "#666666")
 			    .attr("stop-opacity", 1);
-
 			gradient.append("stop")
 			    .attr("offset", "25%")
 			    .attr("stop-color", "#666666")
 			    .attr("stop-opacity", 1);
-
 			gradient.append("stop")
 			    .attr("offset", "75%")
 			    .attr("stop-color", "#DBDBDB")
 			    .attr("stop-opacity", 1);
         }
-
         // const rc = rough.svg(svg);
-
        var createElements = function (svg, radius, nodes, elementRadius) {
        	   svg
         	.append('rect')
@@ -891,7 +880,6 @@ function drawCircles(num_circles){
         	.attr("height",radius)
         	.style("filter","url(#blur)")
         	.style("fill", "url(#gradient)");
-
          element = svg.selectAll('circle')
             .data(nodes)
             .enter()
@@ -904,7 +892,6 @@ function drawCircles(num_circles){
             .attr("x", function(d){return d.x})
             .attr("y", function(d){return d.y})
        }
-
        var draw = function () {
        	view = document.querySelector('.view');
 		view_height = view.style.height;
@@ -924,32 +911,26 @@ function drawCircles(num_circles){
            createElements(svg, radius, nodes, 10);
          });
        }
-
        document.addEventListener('DOMContentLoaded', (event) => {
           draw();
           showSigPpl();
         })
 }
 // draw shared network for signature view
-function drawPath(point1_id, point2_id, sig_class) {
-
+function drawPath(point1_id, point2_id, sig_class, comment) {
             var p1x = parseFloat(document.getElementById(point1_id).getAttribute("cx"));
             var p1y = parseFloat(document.getElementById(point1_id).getAttribute("cy"));
             var p2x = parseFloat(document.getElementById(point2_id).getAttribute("cx"));
             var p2y = parseFloat(document.getElementById(point2_id).getAttribute("cy"));
-
             // mid-point of line:
             var mpx = (p2x + p1x) * 0.5;
             var mpy = (p2y + p1y) * 0.5;
-
             // center of svg
             el=document.querySelector('svg')
             this_h=el.clientHeight;
    			c1x =this_h/2;
     		c1y=this_h/2;
-
            // const rc = rough.svg(svg);
-
             // construct the command to draw a quadratic curve
             var curve = "M" + p1x + " " + p1y + " Q " + c1x + " " + c1y + " " + p2x + " " + p2y;
    			// curve = rc.path("M" + p1x + " " + p1y + " Q " + c1x + " " + c1y + " " + p2x + " " + p2y, {
@@ -957,19 +938,28 @@ function drawPath(point1_id, point2_id, sig_class) {
 			// });
    			//  curve.setAttribute("class","curve "+sig_class)
    			//  console.log(curve);
-
+   			tooltip = document.querySelector('.tooltip')
             path = d3.select('svg')
               .append('path')
               .attr("id", point1_id + "_"+ point2_id)
               .attr("class","curve "+sig_class)
-              .attr('d', curve);
-
+              .attr('d', curve)
+              .on("mouseover", function(){
+              	getpos()
+              	tooltip.innerHTML=comment
+              	tooltip.style.display="block"
+              	tooltip.style.opacity="1"
+              	tooltip.style.left=x
+              	tooltip.style.top=y
+              	tooltip.style.width="10em"
+              })
+              .on("mouseout", function(){
+              	tooltip.innerHTML=""
+              	tooltip.style.display="none"
+              	tooltip.style.opacity="0"
+              	tooltip.style.width="auto"
+              });
             // svg.appendChild(curve);
-
-            path
-              .transition()        
-              .duration(1000)
-              .ease(d3.easeLinear)
         }
 function updatePaths(){
 		path_data = [];
@@ -993,34 +983,27 @@ function updatePaths(){
 				p2y: p2y
 			})
 		}
-
 		console.log(path_data)
-
 		// center of svg
 	    el=document.querySelector('svg')
 	    this_h=el.clientHeight;
 		c1x =this_h/2;
 		c1y=this_h/2;
-
 		for(i=0;i<path_data.length;i++){
 			updated_curve = "M" + path_data[i]['p1x'] + " " + path_data[i]['p1y'] + " Q " + c1x + " " + c1y + " " + path_data[i]['p2x'] + " " + path_data[i]['p2y'];
 			d3.selectAll('#'+path_data[i]['id'])
 				.attr('d', updated_curve)
 				.transition()
 				.ease(d3.easeLinear)
-				.duration(1000);
+				.duration(0);
 		}
-
 }
-
 function updateSvg(width,height){
-
 		svg = d3.select('svg')
 			.transition()
 			.duration(100)
 			.attr("width", height + 50)
 			.attr("height", height + 50);
-
        function createNodes (numNodes, radius) {
          var nodes = [], 
              width = (radius*2) + 50,
@@ -1037,11 +1020,8 @@ function updateSvg(width,height){
          }
          return nodes;
        }
-
       function updateCircles (radius, nodes, elementRadius) {
-
       	svg = d3.select('svg');
-
       	svg.select('rect')
       		.transition()
       		.duration(100)
@@ -1049,7 +1029,6 @@ function updateSvg(width,height){
         	.attr("y",0)
         	.attr("width",radius+150)
         	.attr("height",radius);
-
         svg.selectAll('circle')
         	.data(nodes)
          	.transition()
@@ -1058,19 +1037,15 @@ function updateSvg(width,height){
             .attr('cx', function (d, i) {return d.x;})
             .attr('cy', function (d, i) {return d.y;})
        };
-
        nodes = createNodes(14, height/2);
        updateCircles(height/2, nodes,10)
-
 }
-
 // highlight unique reactions in signature view
 function highlight(point, sig_class){
 	var highlight = document.getElementById(point);
 	highlight.classList.add(sig_class);
 	// highlight.setAttribute("r",15);
 }
-
 function showSigPpl() {
 	tooltip=document.querySelector('.tooltip');
 	circles = document.querySelectorAll('circle');
@@ -1117,11 +1092,9 @@ function showSigPpl() {
 		}
 	}
 }
-
 function clearDiv(div) {
 	div.innerHTML="";
 }
-
 function getProfile() {
 // make profile container
 			target = document.querySelector('.profile')
@@ -1133,7 +1106,6 @@ function getProfile() {
 				tooltip.appendChild(div);
 			}
 }
-
 function getProfileData(data, role){
 	target = document.querySelector('.profile')
 	role = caps(role.replace(/_/g, " "))
@@ -1171,9 +1143,7 @@ function getProfileData(data, role){
 	getDetails(data, target, pic, role)
 	tooltip.style.display="block";
 	tooltip.style.opacity="0.95";
-
 }
-
 function getDetails(data, target, pic, role){
 	formatPercent = d3.format(".0%")
 	listendaily = data[0]['q5_listendaily']
@@ -1219,8 +1189,6 @@ function getDetails(data, target, pic, role){
 		}
 	}
 }
-
-
 // setup spatial view
 function spatial() {
 	page = document.querySelector('.page')
@@ -1238,7 +1206,6 @@ function spatial() {
 					getProfileData(data, role)
 				})
 				.catch(function(error){
-
 				})
 			test = x.split("px");
 			console.log(test[0], window.innerWidth/2)
@@ -1263,7 +1230,6 @@ function spatial() {
 		}
 	}
 }
-
 function updateSpatial(data, role){
 	role = role.replace(/\s/g, "_");
 	role = role.toLowerCase();
@@ -1301,7 +1267,6 @@ function updateSpatial(data, role){
 		}
 	} else if (sentiment == "mixed" | sentiment =="other"){
 		target.classList.add('mixedFade');
-
 	}
 	setTimeout( ()=> {
 		role = this.role.toString();
@@ -1329,9 +1294,7 @@ function updateSpatial(data, role){
 			rater2.classList.remove('mixedFade')
 		};
 	},10000)
-
 }
-
 // dynamic or locked view of score based on # of reactions 
 function alignScoreView(comments_count){
 	console.log(comments_count)
@@ -1354,9 +1317,7 @@ function alignScoreView(comments_count){
 		console.log("up")
 		score_view.style.height="0px";
 	}
-
 }
-
 // number of agreements/disagreements by raters for each reaction
 function displayEndorsement(data, comment_id){
 	results = [];
@@ -1392,7 +1353,6 @@ function displayEndorsement(data, comment_id){
 	endorsements.innerHTML="<div class='social agree' name="+ comment_id +"><em>"+ agrees.length + " <i class='material-icons'>thumb_up</i></em></div><div class='social disagree' name="+ comment_id +"><em>"+ disagrees.length + " <i class='material-icons' style='transform:translate(360deg);color:#CCCCCC'>thumb_down</i></em></div>";
 	target.prepend(endorsements);
 }
-
 function endorsementsDetail(data) {
 	tooltip=document.querySelector('.tooltip');
 	agrees = document.querySelectorAll(".agree");
@@ -1418,7 +1378,6 @@ function endorsementsDetail(data) {
 				agree.push(data[index]['rater2'])
 			}
 			displayEndorsement();
-
 			function displayEndorsement() {
 				if(agree.length!=0){
 					tooltip.style.display="block";
@@ -1456,7 +1415,6 @@ function endorsementsDetail(data) {
 			agree.push(data[index]['rater2'])
 		}
 		displayEndorsement();
-
 		function displayEndorsement() {
 			if(disagree.length!=0){
 				tooltip.style.display="block";
@@ -1473,9 +1431,7 @@ function endorsementsDetail(data) {
 		tooltip.style.opacity="0";
 	}
 }
-
 }
-
 // each reaction's category by sentiment
 function displayTags(data, comment_id){
 	tags = []
@@ -1498,9 +1454,7 @@ function displayTags(data, comment_id){
 		target = document.getElementById(comment_id);
 		target.appendChild(category_tag);
 	}
-
 }
-
 // adjust audio playback rate based on # reactions
 function adjustPlayback(data) {
 	slow=0.6;
@@ -1517,7 +1471,6 @@ function adjustPlayback(data) {
 		audio.playbackRate = slow;
 	}
 }
-
 // highlight score image and scroll to it during audio play
 function reset() {
 	overlays = document.querySelectorAll('.overlay');
@@ -1526,14 +1479,12 @@ function reset() {
 		overlay.style.removeProperty('background');
 	}
 }
-
 function hover(img){
 	target = document.querySelector('#page-holder'+img)
 	overlay = target.querySelector('.overlay');
 	// overlay.style.opacity="0.2";
 	overlay.style.background="linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0)), linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0))";
 }
-
 function scrollTo(img){
 	scrollpost = document.querySelector('.page');
 	test=document.querySelector('#page-holder'+img);
@@ -1550,7 +1501,6 @@ function scrollTo(img){
 		});
 	}
 }
-
 //calculate which measure each beat falls under
 function getScore() {
 d3.csv('data/cluster_results.csv')
@@ -1568,18 +1518,18 @@ d3.csv('data/cluster_results.csv')
 		target.style.height=height/8+"px";
 		cluster = document.createElement('div');
 		label = data[i-1]['labels'];
-		cluster.setAttribute("class", "label"+label)
+		cluster.setAttribute("class", "label"+label + " clusterlabel")
 		div.appendChild(img);
 		div.appendChild(overlay);
 		div.appendChild(cluster);
 		target.appendChild(div);
 		}
+	goToAnalysis();
 		})
 	.catch(function(error){
 	})
 }
 	
-
 // resize reactions container based on window size
 function resizeInterface() {
 	fill = document.querySelector('.fill');
@@ -1610,7 +1560,6 @@ function resizeInterface() {
 		},1000)
 	}
 }
-
 function toggleScore(view, view_height) {
 	page = document.querySelector('.page');
 	view2 = document.querySelector('#reactions2');
@@ -1624,7 +1573,6 @@ function toggleScore(view, view_height) {
 	        return (togg = !togg) ? a() : b();
 	    };
 	};
-
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
 		view2.addEventListener('swiped-up', function(e) {
 		    page.style.height="0px";
@@ -1679,11 +1627,10 @@ function toggleScore(view, view_height) {
 		}));
 	}	
 }
-
 // run other supporting/tour functions 
+onboard();
 tourImpressions() 
 tourEnsemble();
-
 // get Impressions information
 function tourImpressions() {
 	icon = document.querySelector('#imp_show');
@@ -1695,7 +1642,6 @@ function tourImpressions() {
 		lightbox.style.display="none";
 	}
 }
-
 function tourEnsemble() {
 	icon2 = document.querySelector('#ensemble_show');
 	lightbox2 = document.querySelector('#ensemble_about');
@@ -1706,6 +1652,17 @@ function tourEnsemble() {
 		lightbox2.style.display="none";
 	}
 }
-
+function onboard() {
+	onboarding = document.querySelector('.onboarding');
+	about = document.querySelector('#about');
+	about.onclick=function() {
+		onboarding.innerHTML="<iframe src='start.html' frameborder=0></iframe><div class='close'>X</div>"
+		onboarding.style.display="block";
+		close = onboarding.querySelector('.close');
+		close.onclick=function() {
+			onboarding.style.display="none";
+		}
+	}
+}
 </script>
 </html>

@@ -3,6 +3,7 @@
 <head>
 	<script src="https://d3js.org/d3.v5.min.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Heebo:100,300,300i, 400" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<title></title>
 <style>
 body, html {
@@ -31,6 +32,23 @@ body, html {
 p {
 	font-size:0.8em;
 	font-weight:300;
+}
+i {
+	background-color:#666666;
+	border-radius:50%;
+	padding:3%;
+}
+.play {
+	display:inline-block;
+	margin-left:2%;
+	mix-blend-mode:multiply;
+	cursor:pointer;
+	transition:0.5s all ease-in-out;
+	transform-origin:50% 50%;
+	vertical-align:middle;
+}
+.play:hover {
+	transform:scale(1.1);
 }
 .holder:hover {
 	transform-origin:50% 50%;
@@ -73,6 +91,7 @@ h1 {
 	letter-spacing:-0.05em;
 	text-align:center;
 	color:#F2F2F2;
+	width:100%;
 }
 .identity {
 	display:inline-block;
@@ -92,32 +111,116 @@ h1 {
 	height:100vh;
 	scroll-snap-align: center;
 }
+.model {
+	width:100%;
+	margin:auto;
+	margin-top:0%;
+	color:#1d1d1d;
+}
+.feature {
+	width:20%;
+	display:inline-block;
+	vertical-align:top;
+	text-align:center;
+}
+.feature h2 {
+	font-weight:100;
+	font-size:1em;
+	letter-spacing:0.05em;
+}
+.feature p {
+	font-size:5em;
+	text-align:center;
+	display:block;
+	line-height:1em;
+	margin-top:3%;
+
+}
+.button {
+	width:fit-content;
+	position:absolute;
+	bottom:20%;
+	text-align:center;
+	padding:1% 5%;
+	border:0.05em solid #F2F2F2;
+	color:#F2F2F2;
+	border-radius:2em;
+	transition:0.25s all ease-in-out;
+	cursor:pointer;
+}
+.button:hover {
+	border: 0.05em solid #D8A693;
+	background-color:#D8A693;
+	box-shadow: 0em 0em 0.5em #CCCCCC;
+	color:white!important;
+}
+#main {
+	background-color:#D9AC9B;
+		display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+#main img {
+	width:100%;
+	text-align:center;
+	mix-blend-mode:multiply;
+}
 #Melody {
-	background-image: linear-gradient(#D9AC9B, #B9D9BB);
+	background-color:#D9AC9B;
 }
 #Magic {
-	background-image: linear-gradient(#B9D9BB, #FFCA90);
+	background-image: linear-gradient(#D9AC9B, #B9D9BB);
 }
 #Building {
-	background-image: linear-gradient(#FFCA90, #DAE2E7);
+	background-image: linear-gradient(#B9D9BB, #FFCA90);
 }
 #Emerging {
-	background-image: linear-gradient(#DAE2E7, #C7B299);
+	background-image: linear-gradient(#FFCA90, #DAE2E7);
 }
 #Drama {
-	background-image: linear-gradient(#C7B299, #1d1d1d);
+	background-image: linear-gradient(#DAE2E7, #C7B299);
 }
 </style>
 </head>
+
 <body>
+	<div class="tooltip"></div>
+	<audio src="assets/music.wav"></audio>
+	<div class="cluster" id="main">
+		<h1>Cluster Analysis</h1>
+		<div class="model">
+			<div class="feature">
+				<h2>Musical Notation</h2>
+				<img src="assets/images/feature_transformation.png">
+			</div>
+			<div class="feature">
+				<h2>Timestamp</h2>
+				<p>2.28</p>
+			</div>
+			<div class="feature">
+				<h2>Measure</h2>
+				<p>2</p>
+			</div>
+			<div class="feature">
+				<h2>Beat</h2>
+				<p>3</p>
+			</div>
+		</div>
 
-<div class="tooltip"></div>
-<audio src="assets/music.wav"></audio>
-
+		<div class="button">View Clusters</div>
+	</div>
 </body>
+
 <script>
 
 timecodes = [];
+melody = [];
+magic = [];
+building = [];
+emerging = [];
+drama = [];
 
 d3.csv('data/cluster_results.csv')
 .then(function(data) {
@@ -127,6 +230,10 @@ d3.csv('data/cluster_results.csv')
 })
 .catch(function(error){
 })
+setTimeout(function() {
+	console.log('fire it up')
+	gotoClusters();
+},300)
 
 descriptions = [{0:"Main melody line"},{0:"Main melody line supported by half or whole note chord progressions in the bass, as well as gentle crescendos and descrescendos climaxing at whole notes"}, {0: "Modified with sharps and flats outside of the key supported by mostly quarter notes on the bass clef in later parts of the piece"}, {0: "Modified with sharps and flats outside of the key and supported by triplets, half or whole notes in crescendo or descrendo in earlier parts of the piece, and/or parts demarcated with forte or fortepiano"}, {0:"Modified with eighth note progressions in the treble clef with half and eight note progressions in the bass clef, eighth rests, and sharp accents"}]
 console.log(descriptions[0])
@@ -151,6 +258,19 @@ function getTimeCodes(data){
 	}
 }
 
+function gotoClusters() {
+	body = document.querySelector('body')
+	button = document.querySelector('.button');
+	button.onclick=function() {
+		melody = document.querySelector('#Melody')
+		target = window.innerHeight;
+		window.scrollTo({
+		  top: target,
+		  behavior:'smooth'
+		});
+	}
+}
+
 function playAudioSprite(){
 	holders = document.querySelectorAll('.holder')
 
@@ -169,6 +289,48 @@ function playAudioSprite(){
 		}
 		holders[i].onmouseout=function() {
 			hideTooltip();
+		}
+	}
+}
+
+function playClusterScore() {
+	plays = document.querySelectorAll('.play')
+	for(i=0;i<plays.length;i++){
+		parent = plays[i].parentElement.parentElement
+		content = parent.querySelector('.content')
+		beats = content.querySelectorAll('div');
+		for (j=0;j<beats.length;j++){
+			id = beats[j].id
+			console.log(id)
+			segment = timecodes.filter(function(d){return d.id==id})
+			console.log(segment)
+			src = 'assets/music.wav#t='+ segment[0]['start'] + "," + segment[0]['end']
+			// if(i==0){
+			// 	melody.push({
+			// 		id:id,
+			// 		src: src
+			// 	})
+			// } else if (i==1){
+			// 	magic.push({
+			// 		id:id,
+			// 		src: src
+			// 	})
+			// } else if (i==2){
+			// 	building.push({
+			// 		id:id,
+			// 		src: src
+			// 	})
+			// } else if (i==3){
+			// 	emerging.push({
+			// 		id:id,
+			// 		src: src
+			// 	})
+			// } else if (i==4){
+			// 	drama.push({
+			// 		id:id,
+			// 		src: src
+			// 	})
+			// }
 		}
 	}
 }
@@ -232,6 +394,9 @@ function showClusters(data){
 		}
 		div.setAttribute('id', name)
 		h1.innerHTML=name
+		play = document.createElement('div')
+		play.setAttribute("class", "play")
+		play.innerHTML="<i class='material-icons'>play_arrow</i>"
 		identity = document.createElement('img')
 		identity.setAttribute("class","identity")
 		identity.src ="assets/images/cluster"+num+".png"
@@ -249,14 +414,15 @@ function showClusters(data){
 			content.appendChild(holder)
 		}
 		// div.appendChild(identity)
+		h1.appendChild(play)
 		div.appendChild(h1)
 		div.appendChild(p)
 		div.appendChild(content)
 		target.appendChild(div)
 	}
 	playAudioSprite();
+	playClusterScore();
 	
 }
-
 </script>
 </html>
