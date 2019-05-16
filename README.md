@@ -4,6 +4,9 @@
 ## Single page application
 3milychu.github.io/notesonperspective
 
+## Written Thesis
+https://github.com/3milychu/thesis/blob/master/thesis.pdf
+
 ## Project Abstract
 Notes on Perspective experiments with making visually tangible and beautiful the thoughts and feelings that occured during a musical performance. It is a single page application (SPA) with three states. Each state visually experiments with binding data to an abstraction of embodied experience: 1) situatedness, 2) activity and 3) perception.
 
