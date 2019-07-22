@@ -1,5 +1,5 @@
 timecodes = [];
-d3.csv('../data/cluster_results.csv')
+d3.csv('https://raw.githubusercontent.com/3milychu/notesonperspective/master/data/cluster_results.csv')
 .then(function(data) {
 	console.log(data)
 	showClusters(data)
